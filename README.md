@@ -4,7 +4,7 @@
 
 Built for pharma commercial analytics and go-to-market AI rollouts, but applicable to any large-scale AI change management initiative.
 
-🔗 **[Live demo →](https://yourusername.github.io/stakeholder-intelligence-map)**
+🔗 **[Live demo →](https://Ardal-o.github.io/stakeholder-intelligence-map)**
 
 ---
 
