@@ -539,7 +539,81 @@ function escHtml(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').
 function influenceLabel(v) { return v>=8?'Very high':v>=6?'High':v>=4?'Moderate':v>=2?'Low-moderate':'Low'; }
 function readinessLabel(v) { return v>=8?'Very high':v>=6?'High':v>=4?'Moderate':v>=2?'Low-moderate':'Very low'; }
 
-let stakeholders = JSON.parse(localStorage.getItem('sim_stakeholders') || '[]');
+const DEFAULT_STAKEHOLDERS = [
+  {
+    id:'d1', name:'Brand & marketing', fn:'Commercial, Marketing',
+    archetype:'Strategic skeptic', color:'#4f6ef7', influence:7, readiness:5,
+    primary:"'AI won't capture the nuance of our HCP relationships or competitive positioning — it will oversimplify our strategy'",
+    secondary:"Fear of losing narrative control; concerned AI recommendations will create pressure to act on insights they can't validate",
+    context:"Senior brand directors and marketing leads across inline and rare disease portfolio"
+  },
+  {
+    id:'d2', name:'Sales leadership', fn:'Field force hierarchy',
+    archetype:'Compliance gatekeeper', color:'#ef4444', influence:9, readiness:3,
+    primary:"'My reps will game any AI scoring system' and 'Compliance will shut this down before it reaches the field'",
+    secondary:"Fear that AI-generated call recommendations undermine rep judgment and erode HCP trust if wrong",
+    context:"VP Sales, Regional Business Directors, National Account Managers across US territories"
+  },
+  {
+    id:'d3', name:'Commercial analytics', fn:'Data & Analytics',
+    archetype:'Cautious champion', color:'#14b8a6', influence:6, readiness:8,
+    primary:"'The model is only as good as our underlying data — and our data isn't ready for this yet'",
+    secondary:"Professional identity concern: if AI does the analysis, what is the analyst's value-add?",
+    context:"Forecasters, decision scientists, campaign analytics — core power users and AI readiness gatekeepers"
+  },
+  {
+    id:'d4', name:'Medical affairs', fn:'Medical, MSLs, MLR',
+    archetype:'Compliance gatekeeper', color:'#ef4444', influence:7, readiness:2,
+    primary:"'A hallucinated clinical claim ends careers and triggers regulatory scrutiny — the risk calculus is completely asymmetric'",
+    secondary:"Territorial concern: commercial AI tools surfacing clinical data feel like encroachment on Medical's domain",
+    context:"Medical Affairs leadership, MSL program directors, MLR review — sits between commercial and clinical"
+  },
+  {
+    id:'d5', name:'Legal & compliance', fn:'Legal, Privacy, Regulatory',
+    archetype:'Active blocker', color:'#f97316', influence:9, readiness:1,
+    primary:"'We haven't resolved AI liability, IP ownership of outputs, or data privacy implications at scale'",
+    secondary:"Capacity anxiety: every new AI use case means another review cycle — team is already stretched",
+    context:"Legal, Privacy, MLR review — veto power over any patient or HCP-facing AI output"
+  },
+  {
+    id:'d6', name:'Market access', fn:'Payer Strategy, HEOR',
+    archetype:'Strategic skeptic', color:'#4f6ef7', influence:7, readiness:4,
+    primary:"'Payer negotiations require judgment that GenAI will oversimplify — a wrong recommendation is very costly'",
+    secondary:"Data sensitivity concerns: payer data governance in an AI platform is unclear",
+    context:"Value & Access, Health Economics — increasingly critical given pricing and reimbursement pressure"
+  },
+  {
+    id:'d7', name:'Field force', fn:'Sales reps, KAMs, MSLs',
+    archetype:'Workflow defender', color:'#f59e0b', influence:4, readiness:4,
+    primary:"'I know my territory better than any algorithm — AI targeting tells me things I already know or gets it wrong'",
+    secondary:"Surveillance fear: 'Is this tracking whether I follow the AI recommendations?'",
+    context:"Front-line reps and MSLs — adoption laggards can silently stall value realization even after leadership approval"
+  },
+  {
+    id:'d8', name:'Data science', fn:'AI/ML, Advanced Analytics',
+    archetype:'Cautious champion', color:'#14b8a6', influence:6, readiness:9,
+    primary:"'We build good models but deployment gets stuck in governance and IT review loops for months'",
+    secondary:"Platform NIH syndrome: concern that enterprise AI tools constrain model architecture choices",
+    context:"Commercial data science team — predictive modeling, GenAI development; technically fluent and eager for production pathways"
+  },
+  {
+    id:'d9', name:'Finance & forecasting', fn:'Commercial Finance, FP&A',
+    archetype:'Data purist', color:'#a78bfa', influence:5, readiness:5,
+    primary:"'I need to explain every number to the CFO — a black-box AI forecast is not defensible in a business review'",
+    secondary:"Model integrity concern: existing financial models have years of calibration; AI disrupts established baselines",
+    context:"Commercial Finance and Business Planning — forecasts drive resource allocation; AI errors propagate to executive decisions"
+  },
+  {
+    id:'d10', name:'IT & technology', fn:'Tech, Infrastructure, Security',
+    archetype:'Data purist', color:'#a78bfa', influence:5, readiness:7,
+    primary:"'We're already stretched across platform migrations — AI is another priority without additional headcount'",
+    secondary:"Architecture tension: pressure to deploy GenAI fast conflicts with long-term data architecture alignment",
+    context:"Technology and infrastructure org — enabling layer that can accelerate or throttle AI program velocity"
+  }
+];
+
+let stakeholders = JSON.parse(localStorage.getItem('sim_stakeholders') || 'null');
+if(!stakeholders) { stakeholders = DEFAULT_STAKEHOLDERS; persist(); }
 
 function persist() { localStorage.setItem('sim_stakeholders', JSON.stringify(stakeholders)); }
 let selectedId = null;
