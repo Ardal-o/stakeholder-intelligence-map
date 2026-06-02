@@ -3,17 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Stakeholder Intelligence Map — AI Transformation</title>
-<meta name="description" content="An interactive tool for mapping stakeholder resistance and generating AI-powered engagement strategies for enterprise AI transformation programs.">
+<title>Ardalan Ooshani — AI Transformation Leader</title>
+<meta name="description" content="Senior program manager and AI transformation leader with 15+ years driving enterprise change management, AI adoption, and operational excellence.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
 <style>
 :root {
   --bg: #0d0f14;
   --bg2: #131720;
   --bg3: #1a1f2e;
-  --bg4: #1f2638;
   --border: rgba(255,255,255,0.07);
   --border2: rgba(255,255,255,0.12);
   --text: #e8eaf0;
@@ -21,1031 +20,673 @@
   --text3: #4a5168;
   --accent: #4f6ef7;
   --accent2: #6b84ff;
-  --accent-bg: rgba(79,110,247,0.12);
-  --success: #22c55e;
-  --success-bg: rgba(34,197,94,0.1);
-  --danger: #ef4444;
-  --danger-bg: rgba(239,68,68,0.1);
-  --amber: #f59e0b;
+  --accent-bg: rgba(79,110,247,0.1);
   --teal: #14b8a6;
   --teal-bg: rgba(20,184,166,0.1);
-  --purple: #a78bfa;
-  --coral: #f97316;
+  --amber: #f59e0b;
   --font-mono: 'DM Mono', monospace;
   --font-serif: 'Instrument Serif', serif;
   --font-sans: 'DM Sans', sans-serif;
-  --r: 8px;
-  --r-lg: 14px;
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { font-size: 14px; -webkit-font-smoothing: antialiased; }
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: var(--font-sans);
-  min-height: 100vh;
-  line-height: 1.6;
+html { font-size: 14px; scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+body { background: var(--bg); color: var(--text); font-family: var(--font-sans); line-height: 1.6; overflow-x: hidden; }
+
+/* — Noise overlay — */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none; z-index: 0; opacity: 0.4;
 }
 
-.shell { display: grid; grid-template-columns: 280px 1fr; min-height: 100vh; }
-.sidebar {
-  background: var(--bg2);
-  border-right: 1px solid var(--border);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
-.main { display: flex; flex-direction: column; overflow: hidden; }
-
-.sidebar-header {
-  padding: 24px 20px 20px;
+/* — Nav — */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 0 40px;
+  height: 56px;
+  display: flex; align-items: center; justify-content: space-between;
+  background: rgba(13,15,20,0.8);
+  backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
 }
-.logo-mark { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
-.logo-hex {
-  width: 32px; height: 32px;
-  background: var(--accent);
-  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-  flex-shrink: 0;
-}
-.logo-text {
+.nav-logo {
   font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.12em;
+  font-size: 12px;
+  letter-spacing: 0.1em;
   color: var(--text2);
-  line-height: 1.3;
+  text-decoration: none;
 }
-.logo-text strong { color: var(--text); display: block; font-size: 13px; letter-spacing: 0.08em; }
-.sidebar-subtitle {
-  font-size: 11px;
-  color: var(--text3);
+.nav-logo span { color: var(--accent2); }
+.nav-links { display: flex; gap: 28px; align-items: center; }
+.nav-links a {
   font-family: var(--font-mono);
-  letter-spacing: 0.06em;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--text3);
+  text-decoration: none;
   text-transform: uppercase;
+  transition: color 0.15s;
 }
-.add-btn {
-  margin-top: 14px;
-  width: 100%;
-  padding: 10px 14px;
-  background: var(--accent);
-  color: #fff;
-  border: none;
-  border-radius: var(--r);
-  font-family: var(--font-sans);
-  font-size: 13px;
-  font-weight: 500;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 7px;
-  transition: background 0.15s, transform 0.1s;
+.nav-links a:hover { color: var(--text); }
+.nav-cta {
+  padding: 6px 14px;
+  background: var(--accent-bg);
+  border: 1px solid rgba(79,110,247,0.3);
+  border-radius: 6px;
+  color: var(--accent2) !important;
 }
-.add-btn:hover { background: var(--accent2); }
-.add-btn:active { transform: scale(0.98); }
-.add-btn svg { width: 15px; height: 15px; }
+.nav-cta:hover { background: rgba(79,110,247,0.2) !important; border-color: rgba(79,110,247,0.5) !important; }
 
-
-
-.roster-scroll {
-  flex: 1;
-  overflow-y: auto;
-  padding: 12px;
+/* — Hero — */
+.hero {
+  min-height: 100vh;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 100px 40px 80px;
+  position: relative;
+  max-width: 1100px; margin: 0 auto;
 }
-.roster-scroll::-webkit-scrollbar { width: 4px; }
-.roster-scroll::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 4px; }
-.roster-empty {
-  padding: 32px 16px;
-  text-align: center;
-  color: var(--text3);
-  font-size: 11px;
-  line-height: 1.8;
+.hero-eyebrow {
   font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent2);
+  margin-bottom: 24px;
+  display: flex; align-items: center; gap: 10px;
+  animation: fadeUp 0.6s ease both;
 }
-.sh-card {
-  padding: 11px 13px;
-  border-radius: var(--r);
-  border: 1px solid var(--border);
-  margin-bottom: 6px;
+.hero-eyebrow::before {
+  content: '';
+  display: inline-block; width: 24px; height: 1px;
+  background: var(--accent2);
+}
+.hero-name {
+  font-family: var(--font-serif);
+  font-size: clamp(52px, 7vw, 88px);
+  line-height: 1.05;
+  color: var(--text);
+  margin-bottom: 8px;
+  animation: fadeUp 0.6s 0.1s ease both;
+}
+.hero-name em {
+  font-style: italic;
+  color: var(--text2);
+}
+.hero-title {
+  font-family: var(--font-mono);
+  font-size: clamp(12px, 1.4vw, 15px);
+  letter-spacing: 0.06em;
+  color: var(--text3);
+  text-transform: uppercase;
+  margin-bottom: 36px;
+  animation: fadeUp 0.6s 0.2s ease both;
+}
+.hero-summary {
+  font-size: clamp(15px, 1.8vw, 18px);
+  color: var(--text2);
+  line-height: 1.7;
+  max-width: 640px;
+  margin-bottom: 48px;
+  animation: fadeUp 0.6s 0.3s ease both;
+}
+.hero-summary strong { color: var(--text); font-weight: 400; }
+.hero-actions {
+  display: flex; gap: 12px; flex-wrap: wrap;
+  animation: fadeUp 0.6s 0.4s ease both;
+}
+.btn-primary {
+  padding: 12px 24px;
+  background: var(--accent);
+  border: none; border-radius: 8px;
+  color: #fff;
+  font-family: var(--font-mono);
+  font-size: 12px; letter-spacing: 0.06em;
+  text-decoration: none;
   cursor: pointer;
-  transition: border-color 0.13s, background 0.13s;
+  transition: background 0.15s, transform 0.1s;
+  display: inline-flex; align-items: center; gap: 7px;
 }
-.sh-card:hover { border-color: var(--border2); background: var(--bg3); }
-.sh-card.active { border-color: var(--accent); background: var(--accent-bg); }
-.sh-card-top { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
-.sh-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
-.sh-card-name { font-size: 13px; font-weight: 500; color: var(--text); line-height: 1.2; }
-.sh-card-fn { font-size: 11px; color: var(--text3); font-family: var(--font-mono); margin-bottom: 6px; }
-.sh-card-meta { display: flex; gap: 6px; flex-wrap: wrap; }
-.pill { font-size: 10px; font-family: var(--font-mono); padding: 2px 7px; border-radius: 100px; letter-spacing: 0.04em; }
-.pill-inf { background: var(--accent-bg); color: var(--accent2); }
-.pill-read { background: var(--teal-bg); color: var(--teal); }
-.sh-card-archetype { font-size: 10px; color: var(--text3); font-family: var(--font-mono); margin-top: 4px; }
-
-.sidebar-footer {
-  padding: 12px 16px;
-  border-top: 1px solid var(--border);
-  display: flex;
-  gap: 6px;
-}
-.footer-btn {
-  flex: 1;
-  padding: 7px 10px;
+.btn-primary:hover { background: var(--accent2); }
+.btn-primary:active { transform: scale(0.98); }
+.btn-secondary {
+  padding: 12px 24px;
   background: none;
-  border: 1px solid var(--border);
-  border-radius: var(--r);
+  border: 1px solid var(--border2); border-radius: 8px;
   color: var(--text2);
   font-family: var(--font-mono);
-  font-size: 11px;
-  cursor: pointer;
-  transition: border-color 0.13s, color 0.13s, background 0.13s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
+  font-size: 12px; letter-spacing: 0.06em;
+  text-decoration: none;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+  display: inline-flex; align-items: center; gap: 7px;
+}
+.btn-secondary:hover { border-color: var(--border2); color: var(--text); background: var(--bg2); }
+
+/* Grid decoration */
+.hero-grid {
+  position: absolute; right: 0; top: 50%; transform: translateY(-50%);
+  width: 380px; height: 380px; opacity: 0.06;
+  background-image:
+    linear-gradient(var(--border2) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border2) 1px, transparent 1px);
+  background-size: 40px 40px;
+  border-radius: 50%;
+  mask-image: radial-gradient(circle, black 40%, transparent 80%);
+  animation: fadeUp 0.8s 0.5s ease both;
+}
+
+/* — Certifications strip — */
+.certs-strip {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 20px 40px;
+  background: var(--bg2);
+  display: flex; align-items: center; justify-content: center;
+  gap: 40px; flex-wrap: wrap;
+}
+.cert-item {
+  display: flex; align-items: center; gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 10px; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--text3);
+}
+.cert-badge {
+  padding: 3px 8px;
+  border: 1px solid var(--border2);
+  border-radius: 4px;
+  color: var(--accent2);
+  font-weight: 500;
+  font-size: 10px;
+}
+
+/* — Sections — */
+section { padding: 100px 40px; max-width: 1100px; margin: 0 auto; }
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 10px; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--text3);
+  margin-bottom: 48px;
+  display: flex; align-items: center; gap: 12px;
+}
+.section-label::after {
+  content: ''; flex: 1; height: 1px; background: var(--border);
+}
+
+/* — About — */
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+.about-text h2 {
+  font-family: var(--font-serif);
+  font-size: clamp(32px, 4vw, 48px);
+  line-height: 1.15; margin-bottom: 24px; color: var(--text);
+}
+.about-text h2 em { font-style: italic; color: var(--text2); }
+.about-text p {
+  font-size: 14px; color: var(--text2); line-height: 1.75; margin-bottom: 16px;
+}
+.about-text p:last-child { margin-bottom: 0; }
+.about-stats { display: flex; flex-direction: column; gap: 12px; }
+.stat-card {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 10px; padding: 18px 20px;
+  transition: border-color 0.15s;
+}
+.stat-card:hover { border-color: var(--border2); }
+.stat-num {
+  font-family: var(--font-serif); font-size: 36px;
+  color: var(--text); line-height: 1; margin-bottom: 4px;
+}
+.stat-num span { font-style: italic; color: var(--accent2); }
+.stat-label { font-size: 11px; color: var(--text3); font-family: var(--font-mono); letter-spacing: 0.06em; }
+
+/* — Expertise — */
+.expertise-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.exp-card {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 10px; padding: 22px 20px;
+  transition: border-color 0.2s, background 0.2s;
+  position: relative; overflow: hidden;
+}
+.exp-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  opacity: 0; transition: opacity 0.2s;
+}
+.exp-card:hover { border-color: var(--border2); background: var(--bg3); }
+.exp-card:hover::before { opacity: 1; }
+.exp-card.c1::before { background: var(--accent); }
+.exp-card.c2::before { background: var(--teal); }
+.exp-card.c3::before { background: var(--amber); }
+.exp-card.c4::before { background: #a78bfa; }
+.exp-card.c5::before { background: #f97316; }
+.exp-card.c6::before { background: #ec4899; }
+.exp-icon {
+  width: 36px; height: 36px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 14px; font-size: 16px;
+}
+.exp-title {
+  font-size: 13px; font-weight: 500; color: var(--text);
+  margin-bottom: 8px; line-height: 1.3;
+}
+.exp-desc { font-size: 12px; color: var(--text3); line-height: 1.6; }
+
+/* — Experience — */
+.exp-timeline { display: flex; flex-direction: column; gap: 0; }
+.timeline-item {
+  display: grid; grid-template-columns: 200px 1fr;
+  gap: 32px; padding: 32px 0;
+  border-bottom: 1px solid var(--border);
+}
+.timeline-item:first-child { border-top: 1px solid var(--border); }
+.timeline-left { padding-top: 2px; }
+.tl-period {
+  font-family: var(--font-mono); font-size: 10px;
+  letter-spacing: 0.08em; color: var(--text3);
+  text-transform: uppercase; margin-bottom: 6px;
+}
+.tl-company {
+  font-size: 13px; font-weight: 500; color: var(--text2);
+}
+.tl-location {
+  font-size: 11px; color: var(--text3); font-family: var(--font-mono);
+}
+.tl-role {
+  font-family: var(--font-serif); font-size: 20px;
+  font-style: italic; color: var(--text); margin-bottom: 12px; line-height: 1.3;
+}
+.tl-desc { font-size: 13px; color: var(--text2); line-height: 1.7; margin-bottom: 12px; }
+.tl-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+.tl-tag {
+  font-size: 10px; font-family: var(--font-mono);
+  padding: 2px 8px; border-radius: 100px;
+  border: 1px solid var(--border); color: var(--text3);
   letter-spacing: 0.04em;
 }
-.footer-btn:hover { border-color: var(--border2); color: var(--text); background: var(--bg3); }
-.footer-btn svg { width: 13px; height: 13px; }
 
-.map-section { flex-shrink: 0; padding: 20px 24px 0; }
-.map-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 14px; gap: 12px; flex-wrap: wrap; }
-.map-title { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); }
-.legend { display: flex; gap: 10px; flex-wrap: wrap; }
-.legend-item { display: flex; align-items: center; gap: 5px; font-size: 10px; color: var(--text3); font-family: var(--font-mono); }
-.legend-dot { width: 8px; height: 8px; border-radius: 50%; }
-
-.map-frame {
-  position: relative;
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: var(--r-lg);
-  overflow: hidden;
+/* — Tools showcase — */
+.project-card {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 14px; overflow: hidden;
+  transition: border-color 0.2s, transform 0.2s;
 }
-.map-canvas { position: relative; margin: 0 36px 28px 48px; height: 280px; }
-.axis-y-label {
-  position: absolute; left: 0; top: 0; bottom: 28px; width: 48px;
+.project-card:hover { border-color: var(--border2); transform: translateY(-2px); }
+.project-preview {
+  height: 180px; background: var(--bg3);
+  border-bottom: 1px solid var(--border);
   display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
 }
-.axis-y-label span {
-  font-size: 10px; color: var(--text3); font-family: var(--font-mono);
-  letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap;
-  transform: rotate(-90deg);
+.project-preview-inner {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px;
+  padding: 20px; width: 100%; opacity: 0.7;
 }
-.axis-x-label {
-  position: absolute; bottom: 0; left: 48px; right: 36px; height: 28px;
-  display: flex; align-items: center; justify-content: space-between; padding: 0 8px;
+.preview-dot {
+  height: 32px; border-radius: 6px;
+  border: 1px solid rgba(255,255,255,0.08);
 }
-.axis-x-label span { font-size: 10px; color: var(--text3); font-family: var(--font-mono); letter-spacing: 0.06em; }
-.quad-line-h { position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: var(--border); }
-.quad-line-v { position: absolute; top: 0; bottom: 0; left: 50%; width: 1px; background: var(--border); }
-.quad-label { position: absolute; font-size: 9px; color: var(--text3); font-family: var(--font-mono); letter-spacing: 0.04em; padding: 5px; pointer-events: none; }
-
-.map-node {
-  position: absolute; transform: translate(-50%, -50%);
-  display: flex; flex-direction: column; align-items: center; gap: 3px;
-  cursor: pointer; border: none; background: none; padding: 2px; z-index: 2;
-}
-.map-node-circle {
-  border-radius: 50%; display: flex; align-items: center; justify-content: center;
-  font-size: 10px; font-weight: 500; font-family: var(--font-mono);
-  transition: transform 0.15s; border: 1.5px solid;
-}
-.map-node:hover .map-node-circle,
-.map-node.active .map-node-circle { transform: scale(1.2); }
-.map-node.active .map-node-circle { box-shadow: 0 0 0 3px rgba(79,110,247,0.3); }
-.map-node-lbl {
-  font-size: 9px; color: var(--text2); font-family: var(--font-mono);
-  white-space: nowrap; max-width: 72px; text-align: center; line-height: 1.3; pointer-events: none;
-}
-
-.detail-section { flex: 1; overflow-y: auto; padding: 20px 24px 32px; }
-.detail-section::-webkit-scrollbar { width: 4px; }
-.detail-section::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 4px; }
-
-.detail-empty {
-  height: 100%; display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  text-align: center; color: var(--text3);
-  font-family: var(--font-mono); font-size: 11px; line-height: 1.8; padding: 40px;
-}
-.detail-empty-icon {
-  width: 48px; height: 48px; border: 1px solid var(--border2); border-radius: 12px;
-  display: flex; align-items: center; justify-content: center; margin-bottom: 16px; color: var(--text3);
-}
-.detail-empty-icon svg { width: 22px; height: 22px; }
-
-.detail-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--r-lg); overflow: hidden; }
-.detail-head {
-  padding: 18px 20px; border-bottom: 1px solid var(--border);
-  display: flex; align-items: flex-start; justify-content: space-between; gap: 12px;
-}
-.detail-head-left { display: flex; align-items: flex-start; gap: 12px; }
-.detail-head-dot { width: 14px; height: 14px; border-radius: 50%; flex-shrink: 0; margin-top: 3px; }
-.detail-name { font-size: 16px; font-weight: 500; color: var(--text); font-family: var(--font-serif); font-style: italic; }
-.detail-meta { font-size: 11px; color: var(--text3); font-family: var(--font-mono); margin-top: 2px; }
-.detail-head-btns { display: flex; gap: 6px; flex-shrink: 0; }
-.icon-btn {
-  width: 32px; height: 32px; border: 1px solid var(--border); border-radius: var(--r);
-  background: none; color: var(--text2); cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  transition: border-color 0.13s, background 0.13s, color 0.13s;
-}
-.icon-btn:hover { border-color: var(--border2); background: var(--bg3); color: var(--text); }
-.icon-btn.danger:hover { border-color: var(--danger); color: var(--danger); background: var(--danger-bg); }
-.icon-btn svg { width: 14px; height: 14px; }
-
-.detail-body { padding: 18px 20px; }
-.detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 18px; }
-.detail-field-lbl { font-size: 10px; font-family: var(--font-mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); margin-bottom: 5px; }
-.detail-field-val { font-size: 12px; color: var(--text2); line-height: 1.5; }
-.meter-track { height: 4px; background: var(--bg4); border-radius: 2px; margin-top: 6px; overflow: hidden; }
-.meter-fill { height: 100%; border-radius: 2px; transition: width 0.3s; }
-
-.resistance-block {
-  background: var(--bg3); border: 1px solid var(--border);
-  border-radius: var(--r); padding: 14px 16px; margin-bottom: 16px;
-}
-.resistance-lbl { font-size: 10px; font-family: var(--font-mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); margin-bottom: 6px; }
-.resistance-text { font-size: 12px; color: var(--text2); line-height: 1.6; }
-
-
-
-.config-panel {
-  background: var(--bg3);
-  border: 1px solid var(--border);
-  border-radius: var(--r);
-  margin-bottom: 12px;
-  overflow: hidden;
-}
-.config-toggle {
-  width: 100%; padding: 10px 14px;
-  background: none; border: none; cursor: pointer;
-  display: flex; align-items: center; justify-content: space-between;
-  color: var(--text2); font-family: var(--font-mono); font-size: 11px;
-  letter-spacing: 0.06em; text-transform: uppercase;
-  transition: color 0.13s;
-}
-.config-toggle:hover { color: var(--text); }
-.config-toggle svg { width: 13px; height: 13px; transition: transform 0.2s; }
-.config-toggle.open svg { transform: rotate(180deg); }
-.config-body { padding: 0 14px 14px; display: none; }
-.config-body.open { display: block; }
-.config-row { margin-bottom: 12px; }
-.config-row:last-child { margin-bottom: 0; }
-.config-lbl {
-  font-size: 10px; font-family: var(--font-mono); color: var(--text3);
-  letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px; display: block;
-}
-.config-chips { display: flex; gap: 6px; flex-wrap: wrap; }
-.chip {
-  padding: 4px 10px; border-radius: 100px;
-  border: 1px solid var(--border); background: none;
-  color: var(--text3); font-family: var(--font-mono); font-size: 10px;
-  letter-spacing: 0.04em; cursor: pointer;
-  transition: border-color 0.13s, color 0.13s, background 0.13s;
-}
-.chip:hover { border-color: var(--border2); color: var(--text2); }
-.chip.sel-blue { border-color: var(--accent); color: var(--accent2); background: var(--accent-bg); }
-.chip.sel-teal { border-color: var(--teal); color: var(--teal); background: var(--teal-bg); }
-.chip.sel-amber { border-color: var(--amber); color: var(--amber); background: rgba(245,158,11,0.1); }
-.chip.sel-red { border-color: var(--danger); color: var(--danger); background: var(--danger-bg); }
-.chip.sel-purple { border-color: var(--purple); color: var(--purple); background: rgba(167,139,250,0.1); }
-.config-textarea {
-  width: 100%; padding: 8px 10px;
-  background: var(--bg4); border: 1px solid var(--border);
-  border-radius: var(--r); color: var(--text);
-  font-family: var(--font-mono); font-size: 11px;
-  line-height: 1.5; resize: vertical; outline: none;
-  transition: border-color 0.13s;
-}
-.config-textarea:focus { border-color: var(--accent); }
-.config-textarea::placeholder { color: var(--text3); }
-.gen-btn {
-  background: var(--accent-bg); border: 1px solid rgba(79,110,247,0.3);
-  border-radius: var(--r); color: var(--accent2);
-  font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.05em;
-  cursor: pointer; display: flex; align-items: center; justify-content: center;
-  gap: 8px; transition: background 0.15s, border-color 0.15s;
-}
-.gen-btn:hover { background: rgba(79,110,247,0.2); border-color: rgba(79,110,247,0.5); }
-.gen-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-.gen-btn svg { width: 15px; height: 15px; }
-
-.ai-output { margin-top: 16px; border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; }
-.ai-output-header {
-  padding: 10px 14px; background: var(--bg3); border-bottom: 1px solid var(--border);
-  font-size: 10px; font-family: var(--font-mono); color: var(--text3);
+.project-body { padding: 20px; }
+.project-tag {
+  font-size: 10px; font-family: var(--font-mono);
   letter-spacing: 0.08em; text-transform: uppercase;
-  display: flex; align-items: center; gap: 7px;
+  color: var(--accent2); margin-bottom: 8px;
 }
-.ai-blink { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--success); animation: blink 1s infinite; }
-@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
-.ai-output-body { padding: 16px; }
-.ai-sec-label {
-  font-size: 10px; font-family: var(--font-mono); letter-spacing: 0.1em;
-  text-transform: uppercase; margin-bottom: 7px; margin-top: 16px;
-  padding-bottom: 5px; border-bottom: 1px solid var(--border);
+.project-title {
+  font-size: 15px; font-weight: 500; color: var(--text);
+  margin-bottom: 8px; line-height: 1.3;
 }
-.ai-sec-label:first-child { margin-top: 0; }
-.ai-sec-body { font-size: 12px; color: var(--text2); line-height: 1.7; white-space: pre-wrap; }
-.spinner span { display: inline-block; animation: dotpulse 1.2s infinite; opacity: 0; font-size: 16px; }
-.spinner span:nth-child(2) { animation-delay: 0.2s; }
-.spinner span:nth-child(3) { animation-delay: 0.4s; }
-@keyframes dotpulse { 0%,80%,100%{opacity:0} 40%{opacity:1} }
+.project-desc { font-size: 12px; color: var(--text3); line-height: 1.6; margin-bottom: 16px; }
+.project-link {
+  font-size: 11px; font-family: var(--font-mono);
+  color: var(--accent2); text-decoration: none;
+  letter-spacing: 0.06em;
+  display: inline-flex; align-items: center; gap: 5px;
+  transition: gap 0.15s;
+}
+.project-link:hover { gap: 8px; }
 
-.modal-backdrop {
-  display: none; position: fixed; inset: 0;
-  background: rgba(0,0,0,0.7); z-index: 100;
-  align-items: center; justify-content: center; padding: 20px;
+/* — Contact — */
+.contact-wrap {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 16px; padding: 60px 48px;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 60px; align-items: center;
 }
-.modal-backdrop.open { display: flex; }
-.modal {
-  background: var(--bg2); border: 1px solid var(--border2);
-  border-radius: var(--r-lg); width: 100%; max-width: 560px;
-  max-height: 90vh; overflow-y: auto; animation: slideUp 0.2s ease;
+.contact-left h2 {
+  font-family: var(--font-serif); font-size: clamp(28px, 3.5vw, 42px);
+  line-height: 1.2; margin-bottom: 16px;
 }
-.modal::-webkit-scrollbar { width: 4px; }
-.modal::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 4px; }
-@keyframes slideUp { from { transform: translateY(16px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-.modal-head {
-  padding: 18px 20px; border-bottom: 1px solid var(--border);
-  display: flex; align-items: center; justify-content: space-between;
-}
-.modal-title { font-size: 14px; font-weight: 500; color: var(--text); }
-.modal-body { padding: 20px; }
-.form-row { margin-bottom: 14px; }
-.form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
-.form-label { display: block; font-size: 11px; font-family: var(--font-mono); color: var(--text3); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px; }
-.form-input, .form-select, .form-textarea {
-  width: 100%; padding: 9px 12px;
+.contact-left h2 em { font-style: italic; color: var(--text2); }
+.contact-left p { font-size: 13px; color: var(--text2); line-height: 1.7; }
+.contact-links { display: flex; flex-direction: column; gap: 10px; }
+.contact-link {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 16px;
   background: var(--bg3); border: 1px solid var(--border);
-  border-radius: var(--r); color: var(--text);
-  font-family: var(--font-sans); font-size: 13px; outline: none;
-  transition: border-color 0.13s;
+  border-radius: 10px; text-decoration: none;
+  transition: border-color 0.15s, background 0.15s;
 }
-.form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--accent); }
-.form-textarea { resize: vertical; line-height: 1.5; }
-option { background: var(--bg2); }
-.slider-wrap { display: flex; align-items: center; gap: 10px; }
-.slider-wrap input[type=range] { flex: 1; -webkit-appearance: none; height: 3px; background: var(--bg4); border-radius: 2px; outline: none; }
-.slider-wrap input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%; background: var(--accent); cursor: pointer; transition: transform 0.1s; }
-.slider-wrap input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.2); }
-.slider-val { font-size: 13px; font-family: var(--font-mono); color: var(--text); min-width: 20px; text-align: right; font-weight: 500; }
-.swatch-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px; }
-.swatch { width: 24px; height: 24px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; transition: transform 0.13s; }
-.swatch:hover { transform: scale(1.15); }
-.swatch.selected { border-color: #fff; }
-.form-footer { display: flex; gap: 8px; margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border); }
-.btn-save { flex: 1; padding: 10px 16px; background: var(--accent); border: none; border-radius: var(--r); color: #fff; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.05em; cursor: pointer; transition: background 0.15s; }
-.btn-save:hover { background: var(--accent2); }
-.btn-cancel { padding: 10px 16px; background: none; border: 1px solid var(--border); border-radius: var(--r); color: var(--text2); font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.05em; cursor: pointer; transition: border-color 0.13s, background 0.13s; }
-.btn-cancel:hover { border-color: var(--border2); background: var(--bg3); }
+.contact-link:hover { border-color: var(--border2); background: var(--bg); }
+.contact-link-icon {
+  width: 32px; height: 32px; border-radius: 7px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; flex-shrink: 0;
+}
+.contact-link-text { flex: 1; }
+.contact-link-label { font-size: 10px; font-family: var(--font-mono); color: var(--text3); letter-spacing: 0.06em; text-transform: uppercase; }
+.contact-link-val { font-size: 13px; color: var(--text); margin-top: 1px; }
+.contact-link-arrow { color: var(--text3); font-size: 12px; }
 
-@media (max-width: 720px) {
-  .shell { grid-template-columns: 1fr; }
-  .sidebar { border-right: none; border-bottom: 1px solid var(--border); max-height: 44vh; }
-  .detail-grid { grid-template-columns: 1fr; }
-  .form-row-2 { grid-template-columns: 1fr; }
-  .map-canvas { height: 200px; }
+/* — Footer — */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 24px 40px;
+  display: flex; align-items: center; justify-content: space-between;
+  font-family: var(--font-mono); font-size: 10px;
+  color: var(--text3); letter-spacing: 0.06em;
+}
+
+/* — Animations — */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.reveal {
+  opacity: 0; transform: translateY(16px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* — Responsive — */
+@media (max-width: 768px) {
+  nav { padding: 0 20px; }
+  .nav-links a:not(.nav-cta) { display: none; }
+  .hero { padding: 90px 20px 60px; }
+  .hero-grid { display: none; }
+  section { padding: 60px 20px; }
+  .about-grid { grid-template-columns: 1fr; gap: 40px; }
+  .expertise-grid { grid-template-columns: 1fr 1fr; }
+  .timeline-item { grid-template-columns: 1fr; gap: 8px; }
+  .contact-wrap { grid-template-columns: 1fr; gap: 32px; padding: 32px 24px; }
+  .certs-strip { padding: 16px 20px; gap: 20px; }
+  footer { flex-direction: column; gap: 8px; text-align: center; }
+}
+@media (max-width: 480px) {
+  .expertise-grid { grid-template-columns: 1fr; }
 }
 </style>
 </head>
 <body>
 
-<div class="shell">
-
-  <div class="sidebar">
-    <div class="sidebar-header">
-      <div class="logo-mark">
-        <div class="logo-hex"></div>
-        <div class="logo-text">
-          <strong>Stakeholder Intelligence</strong>
-          AI Transformation Map
-        </div>
-      </div>
-      <div class="sidebar-subtitle">Pharma commercial · Enterprise AI</div>
-      <button class="add-btn" onclick="openModal(null)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-        Add stakeholder
-      </button>
-
-    </div>
-    <div class="roster-scroll" id="rosterScroll">
-      <div class="roster-empty" id="rosterEmpty">No stakeholders yet.<br>Click "Add stakeholder" to begin.</div>
-    </div>
-    <div class="sidebar-footer">
-      <button class="footer-btn" onclick="exportData()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        Export
-      </button>
-      <button class="footer-btn" onclick="clearAll()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg>
-        Clear all
-      </button>
-    </div>
+<nav>
+  <a href="/" class="nav-logo">AO<span>.</span></a>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#expertise">Expertise</a>
+    <a href="#experience">Experience</a>
+    <a href="#tools">Tools</a>
+    <a href="#contact" class="nav-cta">Get in touch</a>
   </div>
+</nav>
 
-  <div class="main">
-    <div class="map-section">
-      <div class="map-header">
-        <span class="map-title">Influence × AI readiness matrix</span>
-        <div class="legend">
-          <div class="legend-item"><div class="legend-dot" style="background:#4f6ef7"></div>Strategic skeptic</div>
-          <div class="legend-item"><div class="legend-dot" style="background:#14b8a6"></div>Cautious champion</div>
-          <div class="legend-item"><div class="legend-dot" style="background:#ef4444"></div>Compliance gatekeeper</div>
-          <div class="legend-item"><div class="legend-dot" style="background:#a78bfa"></div>Data purist</div>
-          <div class="legend-item"><div class="legend-dot" style="background:#f59e0b"></div>Workflow defender</div>
-          <div class="legend-item"><div class="legend-dot" style="background:#f97316"></div>Active blocker</div>
-        </div>
-      </div>
-      <div class="map-frame">
-        <div class="axis-y-label"><span>Organizational influence →</span></div>
-        <div class="map-canvas" id="mapCanvas">
-          <div class="quad-line-h"></div>
-          <div class="quad-line-v"></div>
-          <div class="quad-label" style="top:0;left:0">Low · Low</div>
-          <div class="quad-label" style="top:0;right:0;text-align:right">Low · High readiness</div>
-          <div class="quad-label" style="bottom:0;left:0">High influence · Low</div>
-          <div class="quad-label" style="bottom:0;right:0;text-align:right">High · High ★</div>
-        </div>
-        <div class="axis-x-label">
-          <span>← Low AI readiness</span>
-          <span>High AI readiness →</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="detail-section" id="detailSection">
-      <div class="detail-empty" id="detailEmpty">
-        <div class="detail-empty-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-        </div>
-        Select a stakeholder from the map or roster<br>to view their resistance profile and generate<br>an AI-powered engagement strategy.
-      </div>
-      <div id="detailContent" style="display:none"></div>
+<!-- Hero -->
+<div style="max-width:1100px;margin:0 auto;position:relative">
+  <div class="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-eyebrow">AI Transformation Leader · Los Angeles, CA</div>
+    <h1 class="hero-name">Ardalan<br><em>Ooshani</em></h1>
+    <div class="hero-title">Senior Program Manager &nbsp;·&nbsp; AI Adoption &amp; Change Leadership &nbsp;·&nbsp; Enterprise Transformation</div>
+    <p class="hero-summary">
+      I help organizations move from <strong>talking about AI</strong> to actually realizing its value — through structured change management, stakeholder enablement, and rigorous operational discipline. <strong>15+ years</strong> turning complex technology programs into measurable business outcomes.
+    </p>
+    <div class="hero-actions">
+      <a href="#tools" class="btn-primary">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        See my tools
+      </a>
+      <a href="#contact" class="btn-secondary">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        Get in touch
+      </a>
     </div>
   </div>
 </div>
 
-<div class="modal-backdrop" id="modalBackdrop" onclick="backdropClick(event)">
-  <div class="modal">
-    <div class="modal-head">
-      <span class="modal-title" id="modalTitle">Add stakeholder</span>
-      <button class="icon-btn" onclick="closeModal()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-      </button>
+<!-- Certs strip -->
+<div class="certs-strip">
+  <div class="cert-item"><span class="cert-badge">CPMAI</span>Certified in Managing AI · PMI</div>
+  <div class="cert-item"><span class="cert-badge">PgMP</span>Program Management Professional</div>
+  <div class="cert-item"><span class="cert-badge">CSSBB</span>Six Sigma Black Belt · ASQ</div>
+  <div class="cert-item"><span class="cert-badge">HBS</span>AI for Leaders · Harvard Business School</div>
+  <div class="cert-item"><span class="cert-badge">ITIL</span>IT Infrastructure Library</div>
+</div>
+
+<!-- About -->
+<section id="about">
+  <div class="section-label">About</div>
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <h2>Where <em>AI strategy</em> meets operational reality</h2>
+      <p>I sit at the intersection of AI adoption, change management, and enterprise program delivery. My work is about the human side of transformation — helping organizations move past pilot fatigue and resistance to sustained, measurable AI-enabled operating models.</p>
+      <p>CPMAI certified by PMI and trained in AI for Leaders at Harvard Business School, I bring both the strategic framework and the operational discipline to deliver AI programs that actually stick.</p>
+      <p>Six Sigma Black Belt rigor shapes how I define metrics, measure behavioral change, and demonstrate real business impact — not just technology deployment.</p>
     </div>
-    <div class="modal-body">
-      <div class="form-row-2">
-        <div>
-          <label class="form-label">Stakeholder group *</label>
-          <input class="form-input" id="fName" type="text" placeholder="e.g. Brand teams" maxlength="40">
-        </div>
-        <div>
-          <label class="form-label">Function / team</label>
-          <input class="form-input" id="fFunction" type="text" placeholder="e.g. Marketing, Commercial" maxlength="60">
-        </div>
+    <div class="about-stats reveal">
+      <div class="stat-card">
+        <div class="stat-num">15<span>+</span></div>
+        <div class="stat-label">Years driving enterprise transformation</div>
       </div>
-      <div class="form-row-2">
-        <div>
-          <label class="form-label">Archetype</label>
-          <select class="form-select" id="fArchetype">
-            <option value="Strategic skeptic">Strategic skeptic</option>
-            <option value="Cautious champion">Cautious champion</option>
-            <option value="Compliance gatekeeper">Compliance gatekeeper</option>
-            <option value="Data purist">Data purist</option>
-            <option value="Workflow defender">Workflow defender</option>
-            <option value="Passive observer">Passive observer</option>
-            <option value="Active blocker">Active blocker</option>
-          </select>
-        </div>
-        <div>
-          <label class="form-label">Color</label>
-          <div class="swatch-row" id="swatchRow">
-            <div class="swatch selected" style="background:#4f6ef7" data-color="#4f6ef7" onclick="selectSwatch(this)"></div>
-            <div class="swatch" style="background:#14b8a6" data-color="#14b8a6" onclick="selectSwatch(this)"></div>
-            <div class="swatch" style="background:#ef4444" data-color="#ef4444" onclick="selectSwatch(this)"></div>
-            <div class="swatch" style="background:#a78bfa" data-color="#a78bfa" onclick="selectSwatch(this)"></div>
-            <div class="swatch" style="background:#f59e0b" data-color="#f59e0b" onclick="selectSwatch(this)"></div>
-            <div class="swatch" style="background:#f97316" data-color="#f97316" onclick="selectSwatch(this)"></div>
-            <div class="swatch" style="background:#22c55e" data-color="#22c55e" onclick="selectSwatch(this)"></div>
-            <div class="swatch" style="background:#ec4899" data-color="#ec4899" onclick="selectSwatch(this)"></div>
-          </div>
-        </div>
+      <div class="stat-card">
+        <div class="stat-num">100<span>+</span></div>
+        <div class="stat-label">Stakeholders managed per program</div>
       </div>
-      <div class="form-row-2">
-        <div>
-          <label class="form-label">Organizational influence (1–10)</label>
-          <div class="slider-wrap">
-            <input type="range" min="1" max="10" step="1" id="fInfluence" value="5" oninput="document.getElementById('fInfluenceVal').textContent=this.value">
-            <span class="slider-val" id="fInfluenceVal">5</span>
-          </div>
-        </div>
-        <div>
-          <label class="form-label">AI readiness (1–10)</label>
-          <div class="slider-wrap">
-            <input type="range" min="1" max="10" step="1" id="fReadiness" value="5" oninput="document.getElementById('fReadinessVal').textContent=this.value">
-            <span class="slider-val" id="fReadinessVal">5</span>
-          </div>
-        </div>
+      <div class="stat-card">
+        <div class="stat-num">35<span>%</span></div>
+        <div class="stat-label">Inventory reduction via process redesign</div>
       </div>
-      <div class="form-row">
-        <label class="form-label">Primary resistance — what objection do they raise? *</label>
-        <textarea class="form-textarea" id="fPrimary" rows="2" placeholder="e.g. 'AI won't capture the nuance of HCP relationships'"></textarea>
-      </div>
-      <div class="form-row">
-        <label class="form-label">Secondary concern — underlying fear or political dynamic</label>
-        <textarea class="form-textarea" id="fSecondary" rows="2" placeholder="e.g. Fear of losing strategic control over brand narrative"></textarea>
-      </div>
-      <div class="form-row">
-        <label class="form-label">Context notes — team size, key dynamics, past AI experiences</label>
-        <textarea class="form-textarea" id="fContext" rows="2" placeholder="Optional — richer context produces sharper AI strategy"></textarea>
-      </div>
-      <div class="form-footer">
-        <button class="btn-save" onclick="saveForm()">Save stakeholder</button>
-        <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+      <div class="stat-card">
+        <div class="stat-num">5<span>×</span></div>
+        <div class="stat-label">End-to-end transformation programs delivered</div>
       </div>
     </div>
   </div>
-</div>
+</section>
+
+<!-- Expertise -->
+<section id="expertise" style="padding-top:0">
+  <div class="section-label">Core expertise</div>
+  <div class="expertise-grid">
+    <div class="exp-card c1 reveal">
+      <div class="exp-icon" style="background:var(--accent-bg)">🧠</div>
+      <div class="exp-title">AI Adoption Strategy</div>
+      <div class="exp-desc">Translating AI capabilities into adoption roadmaps. Managing resistance, coaching teams through ambiguity, and building sustained commitment to AI-enabled ways of working.</div>
+    </div>
+    <div class="exp-card c2 reveal">
+      <div class="exp-icon" style="background:var(--teal-bg)">🔄</div>
+      <div class="exp-title">Change Management</div>
+      <div class="exp-desc">Organizational readiness assessment, stakeholder engagement frameworks, communication plans, and training programs that drive durable behavioral change.</div>
+    </div>
+    <div class="exp-card c3 reveal">
+      <div class="exp-icon" style="background:rgba(245,158,11,0.1)">📊</div>
+      <div class="exp-title">Adoption Metrics & Impact</div>
+      <div class="exp-desc">Six Sigma-driven approach to defining leading and lagging KPIs, measuring behavioral change, and demonstrating real business impact from transformation programs.</div>
+    </div>
+    <div class="exp-card c4 reveal">
+      <div class="exp-icon" style="background:rgba(167,139,250,0.1)">🏗️</div>
+      <div class="exp-title">Enterprise Program Delivery</div>
+      <div class="exp-desc">PgMP-certified program leadership across multi-workstream, cross-functional, geographically distributed transformations — on time, on scope, with measurable outcomes.</div>
+    </div>
+    <div class="exp-card c5 reveal">
+      <div class="exp-icon" style="background:rgba(249,115,22,0.1)">⚙️</div>
+      <div class="exp-title">Process & Operational Excellence</div>
+      <div class="exp-desc">Redesigning workflows, eliminating bottlenecks, and building scalable operating models. Proven 35–50% efficiency improvements through data-driven process optimization.</div>
+    </div>
+    <div class="exp-card c6 reveal">
+      <div class="exp-icon" style="background:rgba(236,72,153,0.1)">🤝</div>
+      <div class="exp-title">Stakeholder Enablement</div>
+      <div class="exp-desc">Building technical and non-technical audiences into confident, capable platform users — from C-suite communication to front-line training programs and champion networks.</div>
+    </div>
+  </div>
+</section>
+
+<!-- Experience -->
+<section id="experience" style="padding-top:0">
+  <div class="section-label">Experience</div>
+  <div class="exp-timeline">
+    <div class="timeline-item reveal">
+      <div class="timeline-left">
+        <div class="tl-period">Jan 2025 – Present</div>
+        <div class="tl-company">10SOREX</div>
+        <div class="tl-location">Los Angeles, CA</div>
+      </div>
+      <div>
+        <div class="tl-role">Senior Program Manager — Business Transformation & Commercial Operations</div>
+        <div class="tl-desc">Led end-to-end business transformation and market expansion — coordinating multi-workstream initiatives across operations, engineering, and sales. Delivered 12% ahead of schedule with measurable commercial outcomes including early revenue generation and scalable operational infrastructure.</div>
+        <div class="tl-tags">
+          <span class="tl-tag">AI tooling</span>
+          <span class="tl-tag">Change management</span>
+          <span class="tl-tag">Commercial ops</span>
+          <span class="tl-tag">Cloud migration</span>
+        </div>
+      </div>
+    </div>
+    <div class="timeline-item reveal">
+      <div class="timeline-left">
+        <div class="tl-period">Feb 2022 – Dec 2024</div>
+        <div class="tl-company">DMF Lighting Inc.</div>
+        <div class="tl-location">Carson, CA</div>
+      </div>
+      <div>
+        <div class="tl-role">Program Lead — Enterprise Systems & Operations Transformation</div>
+        <div class="tl-desc">Led Oracle Cloud ERP and WMS transformation across 5 divisions and 100+ stakeholders. Simultaneously delivered operational transformation sustaining 15% YoY growth — reducing inventory 35%, minimizing rework 50%, and increasing production capacity 8%.</div>
+        <div class="tl-tags">
+          <span class="tl-tag">Oracle Cloud ERP</span>
+          <span class="tl-tag">Six Sigma</span>
+          <span class="tl-tag">Process redesign</span>
+          <span class="tl-tag">Training programs</span>
+        </div>
+      </div>
+    </div>
+    <div class="timeline-item reveal">
+      <div class="timeline-left">
+        <div class="tl-period">Jul 2015 – Dec 2021</div>
+        <div class="tl-company">VISION Consulting Group</div>
+        <div class="tl-location">Remote / International</div>
+      </div>
+      <div>
+        <div class="tl-role">Project & Program Manager</div>
+        <div class="tl-desc">Delivered 5 end-to-end transformation programs across national and international markets. Developed ELT/ETL methodologies integrating 180+ government and public agencies into a centralized EDI ecosystem.</div>
+        <div class="tl-tags">
+          <span class="tl-tag">PMO governance</span>
+          <span class="tl-tag">ETL / EDI</span>
+          <span class="tl-tag">International markets</span>
+        </div>
+      </div>
+    </div>
+    <div class="timeline-item reveal">
+      <div class="timeline-left">
+        <div class="tl-period">2006 – 2015</div>
+        <div class="tl-company">Various Organizations</div>
+        <div class="tl-location">Engineering & Technology</div>
+      </div>
+      <div>
+        <div class="tl-role">Engineer / Project & Technology Leadership</div>
+        <div class="tl-desc">Led complex infrastructure, operations, and technology transformation programs. Established PMOs, governance frameworks, and performance management practices across multiple organizations.</div>
+        <div class="tl-tags">
+          <span class="tl-tag">PMO</span>
+          <span class="tl-tag">Infrastructure</span>
+          <span class="tl-tag">Technology leadership</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Tools -->
+<section id="tools" style="padding-top:0">
+  <div class="section-label">Tools & projects</div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px">
+    <div class="project-card reveal">
+      <div class="project-preview">
+        <div class="project-preview-inner">
+          <div class="preview-dot" style="background:rgba(79,110,247,0.3)"></div>
+          <div class="preview-dot" style="background:rgba(239,68,68,0.3)"></div>
+          <div class="preview-dot" style="background:rgba(20,184,166,0.3)"></div>
+          <div class="preview-dot" style="background:rgba(245,158,11,0.3)"></div>
+          <div class="preview-dot" style="background:rgba(249,115,22,0.3)"></div>
+          <div class="preview-dot" style="background:rgba(167,139,250,0.3)"></div>
+          <div class="preview-dot" style="background:rgba(79,110,247,0.2)"></div>
+          <div class="preview-dot" style="background:rgba(20,184,166,0.2)"></div>
+        </div>
+      </div>
+      <div class="project-body">
+        <div class="project-tag">AI · Change management</div>
+        <div class="project-title">Stakeholder Intelligence Map</div>
+        <div class="project-desc">Interactive tool for mapping stakeholder resistance and generating AI-powered engagement strategies for enterprise AI transformation programs. Built for pharma commercial and enterprise contexts.</div>
+        <a href="/tool" class="project-link">Launch tool →</a>
+      </div>
+    </div>
+    <div class="project-card reveal" style="border-style:dashed;opacity:0.5">
+      <div class="project-preview" style="background:transparent">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      </div>
+      <div class="project-body">
+        <div class="project-tag">Coming soon</div>
+        <div class="project-title">AI Value Realization Playbook</div>
+        <div class="project-desc">A structured playbook for pharma commercial AI transformation — covering design through rollout with use cases, metrics, and governance frameworks.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section id="contact" style="padding-top:0;padding-bottom:80px">
+  <div class="section-label">Contact</div>
+  <div class="contact-wrap reveal">
+    <div class="contact-left">
+      <h2>Let's build <em>something real</em></h2>
+      <p>I'm open to discussing AI transformation programs, change management strategy, and enterprise program leadership opportunities. Based in Los Angeles — available globally.</p>
+    </div>
+    <div class="contact-links">
+      <a href="mailto:a.ooshani@gmail.com" class="contact-link">
+        <div class="contact-link-icon" style="background:var(--accent-bg)">✉</div>
+        <div class="contact-link-text">
+          <div class="contact-link-label">Email</div>
+          <div class="contact-link-val">a.ooshani@gmail.com</div>
+        </div>
+        <span class="contact-link-arrow">→</span>
+      </a>
+      <a href="https://linkedin.com/in/ardalan-ooshani" target="_blank" class="contact-link">
+        <div class="contact-link-icon" style="background:var(--teal-bg)">in</div>
+        <div class="contact-link-text">
+          <div class="contact-link-label">LinkedIn</div>
+          <div class="contact-link-val">linkedin.com/in/ardalan-ooshani</div>
+        </div>
+        <span class="contact-link-arrow">→</span>
+      </a>
+      <a href="tel:3108442562" class="contact-link">
+        <div class="contact-link-icon" style="background:rgba(245,158,11,0.1)">☎</div>
+        <div class="contact-link-text">
+          <div class="contact-link-label">Phone</div>
+          <div class="contact-link-val">(310) 844-2562</div>
+        </div>
+        <span class="contact-link-arrow">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 Ardalan Ooshani · Los Angeles, CA</span>
+  <span>AI Transformation Leader · PgMP · CPMAI · CSSBB</span>
+</footer>
 
 <script>
-const COLOR_BG = {
-  "#4f6ef7":"rgba(79,110,247,0.15)",
-  "#14b8a6":"rgba(20,184,166,0.15)",
-  "#ef4444":"rgba(239,68,68,0.15)",
-  "#a78bfa":"rgba(167,139,250,0.15)",
-  "#f59e0b":"rgba(245,158,11,0.15)",
-  "#f97316":"rgba(249,115,22,0.15)",
-  "#22c55e":"rgba(34,197,94,0.15)",
-  "#ec4899":"rgba(236,72,153,0.15)",
-  "#8890a8":"rgba(136,144,168,0.15)"
-};
-
-function uid() { return 'sh_'+Math.random().toString(36).slice(2,9); }
-function escHtml(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-function influenceLabel(v) { return v>=8?'Very high':v>=6?'High':v>=4?'Moderate':v>=2?'Low-moderate':'Low'; }
-function readinessLabel(v) { return v>=8?'Very high':v>=6?'High':v>=4?'Moderate':v>=2?'Low-moderate':'Very low'; }
-
-const DEFAULT_STAKEHOLDERS = [
-  {
-    id:'d1', name:'Brand & marketing', fn:'Commercial, Marketing',
-    archetype:'Strategic skeptic', color:'#4f6ef7', influence:7, readiness:5,
-    primary:"'AI won't capture the nuance of our HCP relationships or competitive positioning — it will oversimplify our strategy'",
-    secondary:"Fear of losing narrative control; concerned AI recommendations will create pressure to act on insights they can't validate",
-    context:"Senior brand directors and marketing leads across inline and rare disease portfolio"
-  },
-  {
-    id:'d2', name:'Sales leadership', fn:'Field force hierarchy',
-    archetype:'Compliance gatekeeper', color:'#ef4444', influence:9, readiness:3,
-    primary:"'My reps will game any AI scoring system' and 'Compliance will shut this down before it reaches the field'",
-    secondary:"Fear that AI-generated call recommendations undermine rep judgment and erode HCP trust if wrong",
-    context:"VP Sales, Regional Business Directors, National Account Managers across US territories"
-  },
-  {
-    id:'d3', name:'Commercial analytics', fn:'Data & Analytics',
-    archetype:'Cautious champion', color:'#14b8a6', influence:6, readiness:8,
-    primary:"'The model is only as good as our underlying data — and our data isn't ready for this yet'",
-    secondary:"Professional identity concern: if AI does the analysis, what is the analyst's value-add?",
-    context:"Forecasters, decision scientists, campaign analytics — core power users and AI readiness gatekeepers"
-  },
-  {
-    id:'d4', name:'Medical affairs', fn:'Medical, MSLs, MLR',
-    archetype:'Compliance gatekeeper', color:'#ef4444', influence:7, readiness:2,
-    primary:"'A hallucinated clinical claim ends careers and triggers regulatory scrutiny — the risk calculus is completely asymmetric'",
-    secondary:"Territorial concern: commercial AI tools surfacing clinical data feel like encroachment on Medical's domain",
-    context:"Medical Affairs leadership, MSL program directors, MLR review — sits between commercial and clinical"
-  },
-  {
-    id:'d5', name:'Legal & compliance', fn:'Legal, Privacy, Regulatory',
-    archetype:'Active blocker', color:'#f97316', influence:9, readiness:1,
-    primary:"'We haven't resolved AI liability, IP ownership of outputs, or data privacy implications at scale'",
-    secondary:"Capacity anxiety: every new AI use case means another review cycle — team is already stretched",
-    context:"Legal, Privacy, MLR review — veto power over any patient or HCP-facing AI output"
-  },
-  {
-    id:'d6', name:'Market access', fn:'Payer Strategy, HEOR',
-    archetype:'Strategic skeptic', color:'#4f6ef7', influence:7, readiness:4,
-    primary:"'Payer negotiations require judgment that GenAI will oversimplify — a wrong recommendation is very costly'",
-    secondary:"Data sensitivity concerns: payer data governance in an AI platform is unclear",
-    context:"Value & Access, Health Economics — increasingly critical given pricing and reimbursement pressure"
-  },
-  {
-    id:'d7', name:'Field force', fn:'Sales reps, KAMs, MSLs',
-    archetype:'Workflow defender', color:'#f59e0b', influence:4, readiness:4,
-    primary:"'I know my territory better than any algorithm — AI targeting tells me things I already know or gets it wrong'",
-    secondary:"Surveillance fear: 'Is this tracking whether I follow the AI recommendations?'",
-    context:"Front-line reps and MSLs — adoption laggards can silently stall value realization even after leadership approval"
-  },
-  {
-    id:'d8', name:'Data science', fn:'AI/ML, Advanced Analytics',
-    archetype:'Cautious champion', color:'#14b8a6', influence:6, readiness:9,
-    primary:"'We build good models but deployment gets stuck in governance and IT review loops for months'",
-    secondary:"Platform NIH syndrome: concern that enterprise AI tools constrain model architecture choices",
-    context:"Commercial data science team — predictive modeling, GenAI development; technically fluent and eager for production pathways"
-  },
-  {
-    id:'d9', name:'Finance & forecasting', fn:'Commercial Finance, FP&A',
-    archetype:'Data purist', color:'#a78bfa', influence:5, readiness:5,
-    primary:"'I need to explain every number to the CFO — a black-box AI forecast is not defensible in a business review'",
-    secondary:"Model integrity concern: existing financial models have years of calibration; AI disrupts established baselines",
-    context:"Commercial Finance and Business Planning — forecasts drive resource allocation; AI errors propagate to executive decisions"
-  },
-  {
-    id:'d10', name:'IT & technology', fn:'Tech, Infrastructure, Security',
-    archetype:'Data purist', color:'#a78bfa', influence:5, readiness:7,
-    primary:"'We're already stretched across platform migrations — AI is another priority without additional headcount'",
-    secondary:"Architecture tension: pressure to deploy GenAI fast conflicts with long-term data architecture alignment",
-    context:"Technology and infrastructure org — enabling layer that can accelerate or throttle AI program velocity"
-  }
-];
-
-let stakeholders = JSON.parse(localStorage.getItem('sim_stakeholders') || 'null');
-if(!stakeholders) { stakeholders = DEFAULT_STAKEHOLDERS; persist(); }
-
-function persist() { localStorage.setItem('sim_stakeholders', JSON.stringify(stakeholders)); }
-let selectedId = null;
-let editingId = null;
-let selectedColor = "#4f6ef7";
-
-
-function render() { renderRoster(); renderMap(); }
-
-function renderRoster() {
-  const scroll = document.getElementById('rosterScroll');
-  const empty = document.getElementById('rosterEmpty');
-  scroll.querySelectorAll('.sh-card').forEach(e=>e.remove());
-  if(!stakeholders.length) { empty.style.display=''; return; }
-  empty.style.display='none';
-  stakeholders.forEach(s => {
-    const card = document.createElement('div');
-    card.className = 'sh-card'+(s.id===selectedId?' active':'');
-    card.innerHTML = `<div class="sh-card-top"><div class="sh-dot" style="background:${s.color}"></div><div class="sh-card-name">${escHtml(s.name)}</div></div><div class="sh-card-fn">${escHtml(s.fn||'—')}</div><div class="sh-card-meta"><span class="pill pill-inf">Inf: ${s.influence}/10</span><span class="pill pill-read">AI: ${s.readiness}/10</span></div><div class="sh-card-archetype">${escHtml(s.archetype)}</div>`;
-    card.addEventListener('click', ()=>selectStakeholder(s.id));
-    scroll.appendChild(card);
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
   });
-}
-
-function renderMap() {
-  const canvas = document.getElementById('mapCanvas');
-  canvas.querySelectorAll('.map-node').forEach(n=>n.remove());
-  stakeholders.forEach(s => {
-    const pad = 8;
-    const xPct = pad + ((s.readiness-1)/9)*(100-pad*2);
-    const yPct = pad + (1-(s.influence-1)/9)*(100-pad*2);
-    const btn = document.createElement('button');
-    btn.className = 'map-node'+(s.id===selectedId?' active':'');
-    btn.style.left = xPct+'%';
-    btn.style.top = yPct+'%';
-    btn.setAttribute('aria-label', s.name);
-    const initials = s.name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
-    const bg = COLOR_BG[s.color]||'rgba(79,110,247,0.15)';
-    btn.innerHTML = `<div class="map-node-circle" style="width:30px;height:30px;background:${bg};border-color:${s.color};color:${s.color}">${initials}</div><div class="map-node-lbl">${escHtml(s.name)}</div>`;
-    btn.addEventListener('click', ()=>selectStakeholder(s.id));
-    canvas.appendChild(btn);
-  });
-}
-
-function selectStakeholder(id) {
-  selectedId = id;
-  const s = stakeholders.find(x=>x.id===id);
-  if(!s) return;
-  render();
-  renderDetail(s);
-}
-
-function renderDetail(s) {
-  document.getElementById('detailEmpty').style.display='none';
-  const dc = document.getElementById('detailContent');
-  dc.style.display='';
-  const infW = Math.round((s.influence/10)*100);
-  const readW = Math.round((s.readiness/10)*100);
-
-  dc.innerHTML = `
-    <div class="detail-card">
-      <div class="detail-head">
-        <div class="detail-head-left">
-          <div class="detail-head-dot" style="background:${s.color}"></div>
-          <div>
-            <div class="detail-name">${escHtml(s.name)}</div>
-            <div class="detail-meta">${escHtml(s.archetype)}${s.fn?' · '+escHtml(s.fn):''}</div>
-          </div>
-        </div>
-        <div class="detail-head-btns">
-          <button class="icon-btn" title="Edit" onclick="openModal('${s.id}')">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-          </button>
-          <button class="icon-btn danger" title="Remove" onclick="deleteStakeholder('${s.id}')">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg>
-          </button>
-        </div>
-      </div>
-      <div class="detail-body">
-        <div class="detail-grid">
-          <div>
-            <div class="detail-field-lbl">Organizational influence</div>
-            <div class="detail-field-val">${influenceLabel(s.influence)} (${s.influence}/10)</div>
-            <div class="meter-track"><div class="meter-fill" style="width:${infW}%;background:${s.color}"></div></div>
-          </div>
-          <div>
-            <div class="detail-field-lbl">AI readiness</div>
-            <div class="detail-field-val">${readinessLabel(s.readiness)} (${s.readiness}/10)</div>
-            <div class="meter-track"><div class="meter-fill" style="width:${readW}%;background:#14b8a6"></div></div>
-          </div>
-        </div>
-        <div class="resistance-block">
-          <div class="resistance-lbl">Primary resistance</div>
-          <div class="resistance-text">${escHtml(s.primary)}</div>
-          ${s.secondary?`<div class="resistance-lbl" style="margin-top:12px">Secondary concern</div><div class="resistance-text">${escHtml(s.secondary)}</div>`:''}
-          ${s.context?`<div class="resistance-lbl" style="margin-top:12px">Context</div><div class="resistance-text">${escHtml(s.context)}</div>`:''}
-        </div>
-
-        <div class="config-panel" id="configPanel-${s.id}">
-          <button class="config-toggle" onclick="toggleConfig('${s.id}')">
-            <span>⚙ Strategy configuration</span>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
-          </button>
-          <div class="config-body" id="configBody-${s.id}">
-            <div class="config-row">
-              <span class="config-lbl">Engagement tone</span>
-              <div class="config-chips" data-group="tone" data-id="${s.id}">
-                <button class="chip" data-val="diplomatic" onclick="selectChip(this,'tone','sel-teal')">Diplomatic</button>
-                <button class="chip sel-blue" data-val="balanced" onclick="selectChip(this,'tone','sel-blue')">Balanced</button>
-                <button class="chip" data-val="direct" onclick="selectChip(this,'tone','sel-amber')">Direct</button>
-                <button class="chip" data-val="aggressive" onclick="selectChip(this,'tone','sel-red')">Aggressive</button>
-              </div>
-            </div>
-            <div class="config-row">
-              <span class="config-lbl">Urgency level</span>
-              <div class="config-chips" data-group="urgency" data-id="${s.id}">
-                <button class="chip" data-val="low" onclick="selectChip(this,'urgency','sel-teal')">Long game</button>
-                <button class="chip sel-blue" data-val="medium" onclick="selectChip(this,'urgency','sel-blue')">Steady pace</button>
-                <button class="chip" data-val="high" onclick="selectChip(this,'urgency','sel-amber')">Fast track</button>
-                <button class="chip" data-val="critical" onclick="selectChip(this,'urgency','sel-red')">Critical path</button>
-              </div>
-            </div>
-            <div class="config-row">
-              <span class="config-lbl">Strategic focus</span>
-              <div class="config-chips" data-group="focus" data-id="${s.id}">
-                <button class="chip sel-blue" data-val="balanced" onclick="selectChip(this,'focus','sel-blue')">Balanced</button>
-                <button class="chip" data-val="relationship" onclick="selectChip(this,'focus','sel-teal')">Relationship first</button>
-                <button class="chip" data-val="quickwin" onclick="selectChip(this,'focus','sel-amber')">Quick wins</button>
-                <button class="chip" data-val="metrics" onclick="selectChip(this,'focus','sel-purple')">Metrics driven</button>
-                <button class="chip" data-val="compliance" onclick="selectChip(this,'focus','sel-red')">Compliance led</button>
-              </div>
-            </div>
-            <div class="config-row">
-              <span class="config-lbl">Additional instructions</span>
-              <textarea class="config-textarea" id="configNotes-${s.id}" rows="2" placeholder="e.g. This VP has a close relationship with the Chief Medical Officer, factor that in. Or: focus on cost savings angle only."></textarea>
-            </div>
-          </div>
-        </div>
-        <button class="gen-btn" id="genBtn-${s.id}" onclick="generateStrategy('${s.id}')">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-          Generate engagement strategy
-        </button>
-        <div id="aiOut-${s.id}" style="display:none"></div>
-      </div>
-    </div>`;
-}
-
-
-
-// Strategy configuration state
-const strategyConfig = {};
-function getConfig(id) {
-  return strategyConfig[id] || (strategyConfig[id] = {tone:'balanced', urgency:'medium', focus:'balanced', notes:''});
-}
-
-function toggleConfig(id) {
-  const toggle = document.querySelector(`#configPanel-${id} .config-toggle`);
-  const body = document.getElementById('configBody-'+id);
-  toggle.classList.toggle('open');
-  body.classList.toggle('open');
-}
-
-function selectChip(el, group, selClass) {
-  const container = el.closest('[data-group]');
-  const id = container.dataset.id;
-  const cfg = getConfig(id);
-  container.querySelectorAll('.chip').forEach(c => {
-    c.className = 'chip';
-  });
-  el.classList.add(selClass);
-  cfg[group] = el.dataset.val;
-}
-
-const TONE_PROMPTS = {
-  diplomatic: "Use a highly diplomatic, empathetic tone. Acknowledge their concerns as valid and legitimate before offering any strategy. Prioritize relationship preservation over speed. Frame AI as something that serves their goals, not changes their role.",
-  balanced: "Use a balanced, professional tone. Acknowledge resistance while being clear about the program's direction. Mix empathy with pragmatism.",
-  direct: "Be direct and confident. Acknowledge concerns briefly but focus on clear expectations, timelines, and accountability. Don't over-soften.",
-  aggressive: "Be assertive and challenging. Name the cost of inaction explicitly. Set clear expectations that adoption is not optional and frame resistance as a risk to the stakeholder's own positioning."
-};
-const URGENCY_PROMPTS = {
-  low: "This is a long-game engagement — prioritize trust-building over speed. Suggest a 6-12 month relationship arc before expecting full adoption.",
-  medium: "Target meaningful progress within a standard program quarter (90 days). Balance relationship-building with measurable milestones.",
-  high: "Speed is critical. Compress the engagement arc to 30-60 days. Identify the fastest credible path to a visible win that unlocks broader adoption.",
-  critical: "This is on the critical path. Every week of delay has program-level consequences. Strategy should be bold, highly visible, and escalation-ready if needed."
-};
-const FOCUS_PROMPTS = {
-  balanced: "Balance relationship-building, quick wins, compliance, and metrics equally across the strategy.",
-  relationship: "Prioritize relationship capital above all else. The strategy should center on earning trust at a personal and team level before pushing for adoption.",
-  quickwin: "Lead with quick wins. Find the fastest thing that creates genuine value for this group and use that momentum to pull along the harder adoption asks.",
-  metrics: "Ground everything in data and measurable outcomes. This stakeholder responds to evidence — lead with benchmarks, before/after comparisons, and quantified ROI.",
-  compliance: "Lead with the compliance and governance angle. Show that this AI program reduces their risk and regulatory exposure rather than adding to it."
-};
-
-async function generateStrategy(id) {
-  const s = stakeholders.find(x=>x.id===id);
-  if(!s) return;
-  const cfg = getConfig(id);
-  const notes = document.getElementById('configNotes-'+id)?.value?.trim() || '';
-
-  const btn = document.getElementById('genBtn-'+id);
-  const outEl = document.getElementById('aiOut-'+id);
-  btn.disabled = true;
-  btn.innerHTML = `<span class="spinner"><span>·</span><span>·</span><span>·</span></span> Generating strategy`;
-  outEl.style.display='';
-  outEl.innerHTML = `<div class="ai-output"><div class="ai-output-header"><div class="ai-blink"></div>AI · generating engagement plan</div><div class="ai-output-body" id="aiBody-${id}"><div style="color:var(--text3);font-family:var(--font-mono);font-size:11px">Analyzing resistance profile<span class="spinner"><span>.</span><span>.</span><span>.</span></span></div></div></div>`;
-
-  const prompt = `You are an expert in enterprise AI transformation and change management, specializing in pharma commercial analytics and go-to-market AI programs.
-
-Generate a detailed, actionable engagement strategy for this stakeholder group. Be specific to pharma commercial context (HCP engagement, field force, market access, brand analytics, MLR review, regulatory compliance). Use plain prose only — no markdown asterisks, no pound signs, no bullet formatting.
-
-STAKEHOLDER: ${s.name}
-FUNCTION: ${s.fn||'Not specified'}
-ARCHETYPE: ${s.archetype}
-ORGANIZATIONAL INFLUENCE: ${influenceLabel(s.influence)} (${s.influence}/10)
-AI READINESS: ${readinessLabel(s.readiness)} (${s.readiness}/10)
-PRIMARY RESISTANCE: ${s.primary}
-SECONDARY CONCERN: ${s.secondary||'Not specified'}
-CONTEXT: ${s.context||'Not specified'}
-
-TONE INSTRUCTION: ${TONE_PROMPTS[cfg.tone]}
-URGENCY INSTRUCTION: ${URGENCY_PROMPTS[cfg.urgency]}
-FOCUS INSTRUCTION: ${FOCUS_PROMPTS[cfg.focus]}
-${notes ? `ADDITIONAL INSTRUCTIONS FROM USER: ${notes}` : ''}
-
-Produce exactly four sections. Each must start with the section name in ALL CAPS followed by a colon.
-
-ENGAGEMENT STRATEGY:
-A 3-4 sentence actionable strategy tailored to this archetype, resistance profile, and the tone/urgency/focus settings above. Name specific tactics, sequencing, and who should lead the conversation.
-
-QUICK WIN:
-One specific, concrete pilot or initiative this group can experience within the urgency timeframe above. Name what it does, why it lands with this archetype, and how it builds toward broader adoption.
-
-SUCCESS METRICS:
-Three to five specific, measurable KPIs for tracking this group's adoption and value realization. Include both leading indicators (behavior change) and lagging indicators (business impact).
-
-RISK WATCH:
-Two specific risks that could derail engagement with this group, and one mitigation move for each. Be honest about political and compliance dynamics.`;
-
-  try {
-    const resp = await fetch('/.netlify/functions/generate', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ messages: [{role:'user', content:prompt}] })
-    });
-    const data = await resp.json();
-    if(data.error) throw new Error(data.error.message||data.error);
-    const raw = data.content?.map(c=>c.type==='text'?c.text:'').join('')||'';
-    renderAiSections(id, raw);
-  } catch(e) {
-    document.getElementById('aiBody-'+id).innerHTML = `<span style="color:var(--danger);font-size:12px;font-family:var(--font-mono)">Error generating strategy. Please try again.</span>`;
-  }
-  btn.disabled = false;
-  btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Regenerate strategy`;
-}
-
-function renderAiSections(id, raw) {
-  const sections = [
-    {key:'ENGAGEMENT STRATEGY', color:'#4f6ef7'},
-    {key:'QUICK WIN', color:'#14b8a6'},
-    {key:'SUCCESS METRICS', color:'#a78bfa'},
-    {key:'RISK WATCH', color:'#f97316'}
-  ];
-  const body = document.getElementById('aiBody-'+id);
-  body.innerHTML = '';
-  sections.forEach((sec, i) => {
-    const next = sections[i+1];
-    const startIdx = raw.indexOf(sec.key+':');
-    if(startIdx===-1) return;
-    const contentStart = startIdx+sec.key.length+1;
-    const endIdx = next ? raw.indexOf(next.key+':', contentStart) : raw.length;
-    const content = raw.slice(contentStart, endIdx!==-1?endIdx:raw.length).trim();
-    const lbl = document.createElement('div');
-    lbl.className = 'ai-sec-label';
-    lbl.style.color = sec.color;
-    lbl.style.borderBottomColor = sec.color+'33';
-    lbl.textContent = sec.key.toLowerCase().replace(/\b\w/g,c=>c.toUpperCase());
-    const txt = document.createElement('div');
-    txt.className = 'ai-sec-body';
-    txt.textContent = content;
-    body.appendChild(lbl);
-    body.appendChild(txt);
-  });
-  if(!body.children.length) { body.style.fontFamily='var(--font-mono)'; body.style.fontSize='12px'; body.textContent = raw; }
-}
-
-function openModal(id) {
-  editingId = id;
-  const s = id ? stakeholders.find(x=>x.id===id) : null;
-  document.getElementById('modalTitle').textContent = s ? 'Edit stakeholder' : 'Add stakeholder';
-  document.getElementById('fName').value = s?.name||'';
-  document.getElementById('fFunction').value = s?.fn||'';
-  document.getElementById('fArchetype').value = s?.archetype||'Strategic skeptic';
-  document.getElementById('fInfluence').value = s?.influence||5;
-  document.getElementById('fInfluenceVal').textContent = s?.influence||5;
-  document.getElementById('fReadiness').value = s?.readiness||5;
-  document.getElementById('fReadinessVal').textContent = s?.readiness||5;
-  document.getElementById('fPrimary').value = s?.primary||'';
-  document.getElementById('fSecondary').value = s?.secondary||'';
-  document.getElementById('fContext').value = s?.context||'';
-  selectedColor = s?.color||'#4f6ef7';
-  document.querySelectorAll('.swatch').forEach(sw => sw.classList.toggle('selected', sw.dataset.color===selectedColor));
-  document.getElementById('modalBackdrop').classList.add('open');
-  setTimeout(()=>document.getElementById('fName').focus(), 50);
-}
-
-function closeModal() { document.getElementById('modalBackdrop').classList.remove('open'); editingId=null; }
-function backdropClick(e) { if(e.target===document.getElementById('modalBackdrop')) closeModal(); }
-function selectSwatch(el) {
-  selectedColor = el.dataset.color;
-  document.querySelectorAll('.swatch').forEach(sw=>sw.classList.remove('selected'));
-  el.classList.add('selected');
-}
-
-function saveForm() {
-  const name = document.getElementById('fName').value.trim();
-  if(!name) { document.getElementById('fName').focus(); return; }
-  const primary = document.getElementById('fPrimary').value.trim();
-  if(!primary) { document.getElementById('fPrimary').focus(); return; }
-  const obj = {
-    id: editingId||uid(), name,
-    fn: document.getElementById('fFunction').value.trim(),
-    archetype: document.getElementById('fArchetype').value,
-    color: selectedColor,
-    influence: parseInt(document.getElementById('fInfluence').value),
-    readiness: parseInt(document.getElementById('fReadiness').value),
-    primary, secondary: document.getElementById('fSecondary').value.trim(),
-    context: document.getElementById('fContext').value.trim()
-  };
-  if(editingId) {
-    const idx = stakeholders.findIndex(x=>x.id===editingId);
-    if(idx!==-1) stakeholders[idx]=obj;
-  } else { stakeholders.push(obj); }
-  persist();
-  closeModal();
-  selectedId = obj.id;
-  render();
-  renderDetail(obj);
-}
-
-function deleteStakeholder(id) {
-  const s = stakeholders.find(x=>x.id===id);
-  if(!confirm('Remove "'+s.name+'" from the map?')) return;
-  stakeholders = stakeholders.filter(x=>x.id!==id);
-  persist();
-  selectedId = null;
-  document.getElementById('detailEmpty').style.display='';
-  document.getElementById('detailContent').style.display='none';
-  render();
-}
-
-function exportData() {
-  if(!stakeholders.length) { alert('No stakeholders to export.'); return; }
-  let out = 'STAKEHOLDER INTELLIGENCE MAP\n';
-  out += 'Enterprise AI Transformation\n';
-  out += 'Generated: '+new Date().toLocaleDateString()+'\n';
-  out += '='.repeat(50)+'\n\n';
-  stakeholders.forEach(s => {
-    out += s.name.toUpperCase()+'\n'+'-'.repeat(32)+'\n';
-    out += 'Function: '+(s.fn||'—')+'\n';
-    out += 'Archetype: '+s.archetype+'\n';
-    out += 'Influence: '+influenceLabel(s.influence)+' ('+s.influence+'/10)\n';
-    out += 'AI readiness: '+readinessLabel(s.readiness)+' ('+s.readiness+'/10)\n';
-    out += 'Primary resistance: '+s.primary+'\n';
-    out += 'Secondary concern: '+(s.secondary||'—')+'\n';
-    out += 'Context: '+(s.context||'—')+'\n\n';
-  });
-  const blob = new Blob([out],{type:'text/plain'});
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'stakeholder-intelligence-map.txt';
-  a.click();
-}
-
-function clearAll() {
-  if(!stakeholders.length) return;
-  if(!confirm('Clear all stakeholders? This cannot be undone.')) return;
-  stakeholders = []; persist(); selectedId = null;
-  document.getElementById('detailEmpty').style.display='';
-  document.getElementById('detailContent').style.display='none';
-  render();
-}
-
-render();
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 </script>
 </body>
 </html>
