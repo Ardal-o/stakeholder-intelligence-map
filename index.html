@@ -539,7 +539,9 @@ function escHtml(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').
 function influenceLabel(v) { return v>=8?'Very high':v>=6?'High':v>=4?'Moderate':v>=2?'Low-moderate':'Low'; }
 function readinessLabel(v) { return v>=8?'Very high':v>=6?'High':v>=4?'Moderate':v>=2?'Low-moderate':'Very low'; }
 
-let stakeholders = [];
+let stakeholders = JSON.parse(localStorage.getItem('sim_stakeholders') || '[]');
+
+function persist() { localStorage.setItem('sim_stakeholders', JSON.stringify(stakeholders)); }
 let selectedId = null;
 let editingId = null;
 let selectedColor = "#4f6ef7";
@@ -778,6 +780,7 @@ function saveForm() {
     const idx = stakeholders.findIndex(x=>x.id===editingId);
     if(idx!==-1) stakeholders[idx]=obj;
   } else { stakeholders.push(obj); }
+  persist();
   closeModal();
   selectedId = obj.id;
   render();
@@ -788,6 +791,7 @@ function deleteStakeholder(id) {
   const s = stakeholders.find(x=>x.id===id);
   if(!confirm('Remove "'+s.name+'" from the map?')) return;
   stakeholders = stakeholders.filter(x=>x.id!==id);
+  persist();
   selectedId = null;
   document.getElementById('detailEmpty').style.display='';
   document.getElementById('detailContent').style.display='none';
@@ -820,7 +824,7 @@ function exportData() {
 function clearAll() {
   if(!stakeholders.length) return;
   if(!confirm('Clear all stakeholders? This cannot be undone.')) return;
-  stakeholders = []; selectedId = null;
+  stakeholders = []; persist(); selectedId = null;
   document.getElementById('detailEmpty').style.display='';
   document.getElementById('detailContent').style.display='none';
   render();
