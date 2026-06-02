@@ -271,8 +271,57 @@ body {
 
 
 
+.config-panel {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+.config-toggle {
+  width: 100%; padding: 10px 14px;
+  background: none; border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: space-between;
+  color: var(--text2); font-family: var(--font-mono); font-size: 11px;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  transition: color 0.13s;
+}
+.config-toggle:hover { color: var(--text); }
+.config-toggle svg { width: 13px; height: 13px; transition: transform 0.2s; }
+.config-toggle.open svg { transform: rotate(180deg); }
+.config-body { padding: 0 14px 14px; display: none; }
+.config-body.open { display: block; }
+.config-row { margin-bottom: 12px; }
+.config-row:last-child { margin-bottom: 0; }
+.config-lbl {
+  font-size: 10px; font-family: var(--font-mono); color: var(--text3);
+  letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px; display: block;
+}
+.config-chips { display: flex; gap: 6px; flex-wrap: wrap; }
+.chip {
+  padding: 4px 10px; border-radius: 100px;
+  border: 1px solid var(--border); background: none;
+  color: var(--text3); font-family: var(--font-mono); font-size: 10px;
+  letter-spacing: 0.04em; cursor: pointer;
+  transition: border-color 0.13s, color 0.13s, background 0.13s;
+}
+.chip:hover { border-color: var(--border2); color: var(--text2); }
+.chip.sel-blue { border-color: var(--accent); color: var(--accent2); background: var(--accent-bg); }
+.chip.sel-teal { border-color: var(--teal); color: var(--teal); background: var(--teal-bg); }
+.chip.sel-amber { border-color: var(--amber); color: var(--amber); background: rgba(245,158,11,0.1); }
+.chip.sel-red { border-color: var(--danger); color: var(--danger); background: var(--danger-bg); }
+.chip.sel-purple { border-color: var(--purple); color: var(--purple); background: rgba(167,139,250,0.1); }
+.config-textarea {
+  width: 100%; padding: 8px 10px;
+  background: var(--bg4); border: 1px solid var(--border);
+  border-radius: var(--r); color: var(--text);
+  font-family: var(--font-mono); font-size: 11px;
+  line-height: 1.5; resize: vertical; outline: none;
+  transition: border-color 0.13s;
+}
+.config-textarea:focus { border-color: var(--accent); }
+.config-textarea::placeholder { color: var(--text3); }
 .gen-btn {
-  width: 100%; padding: 11px 16px;
   background: var(--accent-bg); border: 1px solid rgba(79,110,247,0.3);
   border-radius: var(--r); color: var(--accent2);
   font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.05em;
@@ -712,6 +761,46 @@ function renderDetail(s) {
           ${s.context?`<div class="resistance-lbl" style="margin-top:12px">Context</div><div class="resistance-text">${escHtml(s.context)}</div>`:''}
         </div>
 
+        <div class="config-panel" id="configPanel-${s.id}">
+          <button class="config-toggle" onclick="toggleConfig('${s.id}')">
+            <span>⚙ Strategy configuration</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="config-body" id="configBody-${s.id}">
+            <div class="config-row">
+              <span class="config-lbl">Engagement tone</span>
+              <div class="config-chips" data-group="tone" data-id="${s.id}">
+                <button class="chip" data-val="diplomatic" onclick="selectChip(this,'tone','sel-teal')">Diplomatic</button>
+                <button class="chip sel-blue" data-val="balanced" onclick="selectChip(this,'tone','sel-blue')">Balanced</button>
+                <button class="chip" data-val="direct" onclick="selectChip(this,'tone','sel-amber')">Direct</button>
+                <button class="chip" data-val="aggressive" onclick="selectChip(this,'tone','sel-red')">Aggressive</button>
+              </div>
+            </div>
+            <div class="config-row">
+              <span class="config-lbl">Urgency level</span>
+              <div class="config-chips" data-group="urgency" data-id="${s.id}">
+                <button class="chip" data-val="low" onclick="selectChip(this,'urgency','sel-teal')">Long game</button>
+                <button class="chip sel-blue" data-val="medium" onclick="selectChip(this,'urgency','sel-blue')">Steady pace</button>
+                <button class="chip" data-val="high" onclick="selectChip(this,'urgency','sel-amber')">Fast track</button>
+                <button class="chip" data-val="critical" onclick="selectChip(this,'urgency','sel-red')">Critical path</button>
+              </div>
+            </div>
+            <div class="config-row">
+              <span class="config-lbl">Strategic focus</span>
+              <div class="config-chips" data-group="focus" data-id="${s.id}">
+                <button class="chip sel-blue" data-val="balanced" onclick="selectChip(this,'focus','sel-blue')">Balanced</button>
+                <button class="chip" data-val="relationship" onclick="selectChip(this,'focus','sel-teal')">Relationship first</button>
+                <button class="chip" data-val="quickwin" onclick="selectChip(this,'focus','sel-amber')">Quick wins</button>
+                <button class="chip" data-val="metrics" onclick="selectChip(this,'focus','sel-purple')">Metrics driven</button>
+                <button class="chip" data-val="compliance" onclick="selectChip(this,'focus','sel-red')">Compliance led</button>
+              </div>
+            </div>
+            <div class="config-row">
+              <span class="config-lbl">Additional instructions</span>
+              <textarea class="config-textarea" id="configNotes-${s.id}" rows="2" placeholder="e.g. This VP has a close relationship with the Chief Medical Officer, factor that in. Or: focus on cost savings angle only."></textarea>
+            </div>
+          </div>
+        </div>
         <button class="gen-btn" id="genBtn-${s.id}" onclick="generateStrategy('${s.id}')">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
           Generate engagement strategy
@@ -723,9 +812,56 @@ function renderDetail(s) {
 
 
 
+// Strategy configuration state
+const strategyConfig = {};
+function getConfig(id) {
+  return strategyConfig[id] || (strategyConfig[id] = {tone:'balanced', urgency:'medium', focus:'balanced', notes:''});
+}
+
+function toggleConfig(id) {
+  const toggle = document.querySelector(`#configPanel-${id} .config-toggle`);
+  const body = document.getElementById('configBody-'+id);
+  toggle.classList.toggle('open');
+  body.classList.toggle('open');
+}
+
+function selectChip(el, group, selClass) {
+  const container = el.closest('[data-group]');
+  const id = container.dataset.id;
+  const cfg = getConfig(id);
+  container.querySelectorAll('.chip').forEach(c => {
+    c.className = 'chip';
+  });
+  el.classList.add(selClass);
+  cfg[group] = el.dataset.val;
+}
+
+const TONE_PROMPTS = {
+  diplomatic: "Use a highly diplomatic, empathetic tone. Acknowledge their concerns as valid and legitimate before offering any strategy. Prioritize relationship preservation over speed. Frame AI as something that serves their goals, not changes their role.",
+  balanced: "Use a balanced, professional tone. Acknowledge resistance while being clear about the program's direction. Mix empathy with pragmatism.",
+  direct: "Be direct and confident. Acknowledge concerns briefly but focus on clear expectations, timelines, and accountability. Don't over-soften.",
+  aggressive: "Be assertive and challenging. Name the cost of inaction explicitly. Set clear expectations that adoption is not optional and frame resistance as a risk to the stakeholder's own positioning."
+};
+const URGENCY_PROMPTS = {
+  low: "This is a long-game engagement — prioritize trust-building over speed. Suggest a 6-12 month relationship arc before expecting full adoption.",
+  medium: "Target meaningful progress within a standard program quarter (90 days). Balance relationship-building with measurable milestones.",
+  high: "Speed is critical. Compress the engagement arc to 30-60 days. Identify the fastest credible path to a visible win that unlocks broader adoption.",
+  critical: "This is on the critical path. Every week of delay has program-level consequences. Strategy should be bold, highly visible, and escalation-ready if needed."
+};
+const FOCUS_PROMPTS = {
+  balanced: "Balance relationship-building, quick wins, compliance, and metrics equally across the strategy.",
+  relationship: "Prioritize relationship capital above all else. The strategy should center on earning trust at a personal and team level before pushing for adoption.",
+  quickwin: "Lead with quick wins. Find the fastest thing that creates genuine value for this group and use that momentum to pull along the harder adoption asks.",
+  metrics: "Ground everything in data and measurable outcomes. This stakeholder responds to evidence — lead with benchmarks, before/after comparisons, and quantified ROI.",
+  compliance: "Lead with the compliance and governance angle. Show that this AI program reduces their risk and regulatory exposure rather than adding to it."
+};
+
 async function generateStrategy(id) {
   const s = stakeholders.find(x=>x.id===id);
   if(!s) return;
+  const cfg = getConfig(id);
+  const notes = document.getElementById('configNotes-'+id)?.value?.trim() || '';
+
   const btn = document.getElementById('genBtn-'+id);
   const outEl = document.getElementById('aiOut-'+id);
   btn.disabled = true;
@@ -746,13 +882,18 @@ PRIMARY RESISTANCE: ${s.primary}
 SECONDARY CONCERN: ${s.secondary||'Not specified'}
 CONTEXT: ${s.context||'Not specified'}
 
+TONE INSTRUCTION: ${TONE_PROMPTS[cfg.tone]}
+URGENCY INSTRUCTION: ${URGENCY_PROMPTS[cfg.urgency]}
+FOCUS INSTRUCTION: ${FOCUS_PROMPTS[cfg.focus]}
+${notes ? `ADDITIONAL INSTRUCTIONS FROM USER: ${notes}` : ''}
+
 Produce exactly four sections. Each must start with the section name in ALL CAPS followed by a colon.
 
 ENGAGEMENT STRATEGY:
-A 3-4 sentence actionable strategy tailored to this archetype and resistance profile. Name specific tactics, sequencing, and who should lead the conversation. Be concrete about pharma commercial AI context.
+A 3-4 sentence actionable strategy tailored to this archetype, resistance profile, and the tone/urgency/focus settings above. Name specific tactics, sequencing, and who should lead the conversation.
 
 QUICK WIN:
-One specific, concrete pilot or initiative this group can experience in 30-60 days. Name what it does, why it lands with this archetype, and how it builds toward broader adoption.
+One specific, concrete pilot or initiative this group can experience within the urgency timeframe above. Name what it does, why it lands with this archetype, and how it builds toward broader adoption.
 
 SUCCESS METRICS:
 Three to five specific, measurable KPIs for tracking this group's adoption and value realization. Include both leading indicators (behavior change) and lagging indicators (business impact).
