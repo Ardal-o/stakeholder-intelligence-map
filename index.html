@@ -566,8 +566,9 @@ function renderMap() {
   const canvas = document.getElementById('mapCanvas');
   canvas.querySelectorAll('.map-node').forEach(n=>n.remove());
   stakeholders.forEach(s => {
-    const xPct = ((s.readiness-1)/9)*100;
-    const yPct = (1-(s.influence-1)/9)*100;
+    const pad = 8;
+    const xPct = pad + ((s.readiness-1)/9)*(100-pad*2);
+    const yPct = pad + (1-(s.influence-1)/9)*(100-pad*2);
     const btn = document.createElement('button');
     btn.className = 'map-node'+(s.id===selectedId?' active':'');
     btn.style.left = xPct+'%';
